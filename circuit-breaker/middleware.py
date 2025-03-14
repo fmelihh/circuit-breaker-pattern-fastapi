@@ -16,4 +16,3 @@ class CircuitBreakerMiddleware(CircuitBreaker, BaseHTTPMiddleware):
     async def dispatch(self, request: Request, call_next: Callable):
         with self.handle_circuit_breaker():
             response = await call_next(request)
-
