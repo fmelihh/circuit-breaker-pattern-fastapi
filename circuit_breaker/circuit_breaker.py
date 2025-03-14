@@ -70,7 +70,7 @@ class CircuitBreaker:
             raise CircuitBreakerRemoteCallException
 
     async def handle_circuit_breaker(self, func: Callable, *args, **kwargs) -> Response:
-        match self._state:
+        match self.state:
             case State.OPEN:
                 response = await self.handle_open_state(func, *args, **kwargs)
             case State.CLOSED:
