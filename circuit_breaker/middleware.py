@@ -14,7 +14,9 @@ class CircuitBreakerMiddleware(CircuitBreaker, BaseHTTPMiddleware):
         CircuitBreaker.__init__(self, circuit_breaker_input)
 
     async def dispatch(self, request: Request, call_next: Callable):
-        await self.handle_circuit_breaker(
+        response = await self.handle_circuit_breaker(
             func=call_next,
             request=request,
         )
+
+        return response
