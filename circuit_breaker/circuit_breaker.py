@@ -38,7 +38,7 @@ class CircuitBreaker:
         )
         if threshold_datetime >= current_datetime:
             raise CircuitBreakerRemoteCallException(
-                f"Retry after {(threshold_datetime - current_datetime).seconds} secs"
+                message=f"Retry after {(threshold_datetime - current_datetime).seconds} secs"
             )
 
         self.state = State.HALF_OPEN
@@ -53,7 +53,7 @@ class CircuitBreaker:
             self._failed_count += 1
             self.update_last_attempt_datetime()
             self.state = State.OPEN
-            raise CircuitBreakerRemoteCallException from e
+            raise CircuitBreakerRemoteCallException
 
     async def handle_closed_state(self, func: Callable, *args, **kwargs) -> Response:
         try:
@@ -67,7 +67,7 @@ class CircuitBreaker:
             if self._failed_count >= self.circuit_breaker_input.half_open_retry_count:
                 self.state = State.OPEN
 
-            raise CircuitBreakerRemoteCallException from e
+            raise CircuitBreakerRemoteCallException
 
     async def handle_circuit_breaker(self, func: Callable, *args, **kwargs) -> Response:
         match self._state:
