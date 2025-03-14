@@ -1,6 +1,16 @@
 [project]
-name = "circuit-breaker-pattern-fastapi"
+name = "circuit_breaker_fastapi"
 version = "0.1.0"
-description = "Add your description here"
-requires-python = ">=3.11"
-dependencies = []
+description = "Circuit breaker pattern implementation fastapi"
+authors = [{name = "Furkan Melih ERCAN", email = "furkanmelihercan.98@gmail.com"}]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.11.8"
+dependencies = [
+    "fastapi",
+    "pendulum"
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
