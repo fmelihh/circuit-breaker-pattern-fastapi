@@ -30,7 +30,8 @@ class CircuitBreaker:
     def state(self, state: State):
         self._state = state
 
-    def _check_http_exception(self, response: StreamingResponse):
+    @staticmethod
+    def _check_http_exception(response: StreamingResponse):
         if response.status_code < 400:
             return
 
