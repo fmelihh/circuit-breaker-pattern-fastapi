@@ -14,3 +14,6 @@ class CircuitBreakerInputDto(BaseModel):
             return (Exception,)
 
         return tuple(set(v))
+
+    class Config:
+        arbitrary_types_allowed = True
