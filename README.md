@@ -13,6 +13,11 @@ The **Circuit Breaker** pattern is a design pattern used to improve system resil
 - Improves system reliability and recovery.
 - Reduces unnecessary load on failing services.
 
+## Installation
+```
+pip install circuit_breaker_fastapi
+```
+
 ## Example Usage in Python
 ```python
 import uvicorn
