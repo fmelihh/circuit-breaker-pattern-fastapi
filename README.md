@@ -18,7 +18,7 @@ The **Circuit Breaker** pattern is a design pattern used to improve system resil
 pip install circuit_breaker_fastapi
 ```
 
-## Example Usage in Python
+## Example Usage in Python FastAPI
 ```python
 import uvicorn
 from fastapi import FastAPI
