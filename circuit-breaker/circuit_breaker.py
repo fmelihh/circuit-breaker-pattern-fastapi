@@ -43,12 +43,12 @@ class CircuitBreaker:
 
         self.state = State.HALF_OPEN
         try:
-            ret_val = func(*args, **kwargs)
+            response = await func(*args, **kwargs)
 
             self.state = State.CLOSED
             self._failed_count = 0
             self.update_last_attempt_datetime()
-            return ret_val
+            return response
         except self.circuit_breaker_input.exception_list as e:
             self._failed_count += 1
             self.update_last_attempt_datetime()
@@ -57,7 +57,7 @@ class CircuitBreaker:
 
     async def handle_closed_state(self, func: Callable, *args, **kwargs) -> Response:
         try:
-            response = func(*args, **kwargs)
+            response = await func(*args, **kwargs)
             self.update_last_attempt_datetime()
             return response
         except self.circuit_breaker_input.exception_list as e:
