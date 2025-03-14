@@ -6,13 +6,17 @@ from .schemas import CircuitBreakerInputDto
 from .circuit_breaker import CircuitBreaker
 
 
-class CircuitBreakerMiddleware(CircuitBreaker, BaseHTTPMiddleware):
+class CircuitBreakerMiddleware(BaseHTTPMiddleware):
     def __init__(
         self, app, circuit_breaker_input: CircuitBreakerInputDto | None = None
     ):
-        BaseHTTPMiddleware.__init__(self, app)
-        CircuitBreaker.__init__(self, circuit_breaker_input)
+        super().__init__(app)
+        self.circuit_breaker = CircuitBreaker(
+            circuit_breaker_input=circuit_breaker_input
+        )
 
     async def dispatch(self, request: Request, call_next: Callable):
-        with self.handle_circuit_breaker():
-            response = await call_next(request)
+        await self.circuit_breaker.handle_circuit_breaker(
+            func=call_next,
+            request=request,
+        )
